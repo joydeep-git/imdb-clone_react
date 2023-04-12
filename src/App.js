@@ -1,11 +1,13 @@
 import React from "react";
-import "./CSS/App.css";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
+import { AppContext } from "./context/contextApi";
+
+const App = () => {
   return (
-    <div className="App">
-      
-    </div>
+    <AppContext>
+      <div>App</div>
+    </AppContext>
   );
 }
 export default App;
