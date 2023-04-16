@@ -16,14 +16,16 @@ export const AppContext = (props) => {
 
     const fetchSelectedCatagoryData = (query) => {
         setLoading(true)
-        fetchDataFromApi(`search/?q=${query}`).then((res) => {
-            console.log(res);
+        fetchDataFromApi(`search/?q=${query}`).then(({contents}) => {
+            console.log({contents});
+            setSearchResults({contents});
+            setLoading(false);
         })
     }
 
     return (
         <Context.Provider value={{
-            loading, setLoading, searchResults, selectedCatagories, setSelectedCatagories, mobileMenu, setMobileMenu
+            loading, setLoading, searchResults, setSearchResults, selectedCatagories, setSelectedCatagories, mobileMenu, setMobileMenu
         }}>
             {props.children}
         </Context.Provider>
