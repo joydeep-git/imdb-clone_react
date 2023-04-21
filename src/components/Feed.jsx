@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useContext, useState} from "react";
+import LeftNav from "./LeftNav";
 
 function feed() {
-    return <div>feed</div>;
+    return(
+        <div>
+            <LeftNav />
+        </div>
+    )
 }
 
 export default feed;
