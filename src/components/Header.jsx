@@ -51,14 +51,14 @@ function Header() {
         </Link>
       </div>
 
-      <div className="flex flex-row m-4 p-0 items-center justify-center gap-0 border-[1px] border-white rounded-full">
-        <div className="p-0.5 md:p-0.5 md:pl-4 m-0 border-r-[1px] rounded-l-full">
-          <input type="text" placeholder="Search on YouTube"
-            className="bg-transparent outline-none text-white p-0.5 text-xl w-32 md:p-[0,1rem] md:pl-0 md:group-focus-within:pl-0 md:w-64 lg:w-[500px]  text-[0.75rem] items-center justify-center"
+      <div className="flex flex-row m-2 p-0 items-center justify-center gap-0 border-[1px] border-white rounded-full">
+        <div className="p-0.5 md:p-0.5 md:pl-4 m-0 border-r-[1px] rounded-l-full h-[85%]">
+          <input type="text" placeholder="Search"
+            className="bg-transparent outline-none text-white p-0.5 w-32 md:p-[0,1rem] md:pl-0 md:group-focus-within:pl-0 md:w-64 lg:w-[500px]  text-[0.75rem] items-center justify-center h-max"
             onChange={(e) => setSearchQuery(e.target.value)} onKeyUp={searchQueryHandler} value={searchQuery} />
         </div>
-        <div className="p-2 cursor-pointer" onClick={() => searchQueryHandler("searchButton")}>
-          <IoIosSearch className="text-white h-full cursor-pointer" />
+        <div className="flex p-2 cursor-pointer" onClick={() => searchQueryHandler("searchButton")}>
+          <IoIosSearch className="flex text-white" />
         </div>
       </div>
 

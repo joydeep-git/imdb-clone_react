@@ -3,7 +3,7 @@ import LeftNav from "./LeftNav";
 
 function feed() {
     return(
-        <div>
+        <div className="h-[calc(100%-56px)] flex flex-row">
             <LeftNav />
         </div>
     )

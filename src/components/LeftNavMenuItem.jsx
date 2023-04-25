@@ -1,8 +1,11 @@
 import React from 'react';
 
-function LeftNavMenuItem() {
+function LeftNavMenuItem({name, icon, type, className, action}) {
   return (
-    <div>LeftNavMenuItem</div>
+    <div className={'flex flex-row items-center gap-3 text-sm cursor-pointer hover:bg-white/[0.2] rounded-lg p-2 ' + className} onClick={action}>
+      <span>{icon}</span>
+      <span>{name}</span>
+    </div>
   )
 }
 
