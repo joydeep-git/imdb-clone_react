@@ -12,6 +12,7 @@ import { FiBell } from "react-icons/fi";
 import { CgClose } from "react-icons/cg";
 
 import { Context } from "../context/contextApi";
+import Loader from "../shared/Loader";
 
 function Header() {
 
@@ -19,7 +20,7 @@ function Header() {
 
   const redirect = useNavigate();
 
-  const { mobileMenu, setMobileMenu } = useContext(Context);
+  const { mobileMenu, setMobileMenu, loading } = useContext(Context);
   // loading
 
   const searchQueryHandler = (e) => {
@@ -72,6 +73,10 @@ function Header() {
         </div>
 
       </div>
+
+      {
+        loading && <Loader />
+      }
 
     </div>
   )

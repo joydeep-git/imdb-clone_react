@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import LeftNavMenuItem from './LeftNavMenuItem';
@@ -52,7 +52,13 @@ function LeftNav() {
         }
         <hr className="my-5 border-white/[0.2]" />
         <div className='text-xs text-white'>
-          Clone by  : Joydeep Das
+          Clone by  : &nbsp; &nbsp; <br />
+          <a href="https://jd-protfolio-react.netlify.app"
+            className='text-blue-700 font-bold text-xl p-0 m-0'
+            target='blank'
+            rel="noopener noreferrer">
+            Joydeep Das
+          </a>
         </div>
       </div>
     </div>
