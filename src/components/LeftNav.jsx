@@ -8,6 +8,8 @@ import { Context } from '../context/contextApi';
 function LeftNav() {
   const { selectedCatagories, setSelectedCatagories, mobileMenu } = useContext(Context);
 
+  console.log(mobileMenu);
+
   const redirect = useNavigate("/");
 
   const clickHandler = (name, type) => {
@@ -24,8 +26,7 @@ function LeftNav() {
   };
 
   return (
-    <div className={`md:block w-[240px] overflow-y-auto h-full py-4 bg-[#0f0f0f] absolute md:relative z-10 translate-x-[-240px] md:translate-x-0 transition-all ${mobileMenu ? "translate-x-0" : ""
-      }`}>
+    <div className={` ${ mobileMenu ? "visible" : "hidden" } w-[240px] overflow-y-auto h-full py-4 bg-[#0e0d0d] z-10 transition-all`}>
       <div className='flex flex-col px-5 text-white'>
         {
           categories.map((item) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { abbreviateNumber } from 'js-abbreviation-number';
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
@@ -6,28 +6,14 @@ import VideoLength from '../shared/VideoLength';
 
 function SuggestionVideoCard({ video }) {
 
-    const [imageSrc, setImageSrc] = useState(video?.thumbnails?.[0].url);
-
-    const handleMouseOver = () => {
-        if (video?.movingThumbnails?.length > 0) {
-            setImageSrc(video?.movingThumbnails[0].url);
-        }
-    };
-
-    const handleMouseOut = () => {
-        setImageSrc(video?.thumbnails[0]?.url);
-    };
-
     return (
         <Link to={`/video/${video?.videoId}`}>
             <div className="flex mb-3">
                 <div className="relative h-24 lg:h-20 xl:h-24 w-40 min-w-[168px] lg:w-32 lg:min-w-[128px] xl:w-40 xl:min-w-[168px] rounded-xl bg-slate-800 overflow-hidden">
                     <img
-                        src={imageSrc}
+                        src={video?.thumbnails[0]?.url}
                         alt=''
                         className="w-full h-full object-cover"
-                        onMouseOver={handleMouseOver}
-                        onMouseOut={handleMouseOut}
                     />
                     {video?.lengthSeconds && (
                         <VideoLength time={video?.lengthSeconds} />

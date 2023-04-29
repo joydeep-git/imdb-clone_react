@@ -16,32 +16,54 @@ function VideoDetails() {
     const [ relatedVideos, setRelatedVideos ] = useState();
     const { setLoading } = useContext(Context);
 
-    const fetchVideoDetails = () => {
-        setLoading(true);
-        fetchDataFromApi(`video/details/?id=${id}`).then((res) => {
-            setVideo(res);
-            setLoading(false);
-        });
-    };
-
-    const fetchRelatedVideos = () => {
-        setLoading(true);
-        fetchDataFromApi(`video/related-contents/?id=${id}`).then((res) => {
-            setRelatedVideos(res);
-            setLoading(false);
-        });
-    };
-
     useEffect(() => {
+        const fetchVideoDetails = () => {
+            setLoading(true);
+            fetchDataFromApi(`video/details/?id=${id}`).then((res) => {
+                setVideo(res);
+                setLoading(false);
+            });
+        }
+
+        const fetchRelatedVideos = () => {
+            setLoading(true);
+            fetchDataFromApi(`video/related-contents/?id=${id}`).then((res) => {
+                setRelatedVideos(res);
+                setLoading(false);
+            });
+        }
+
         document.getElementById("root").classList.add("custom-h");
         fetchVideoDetails();
         fetchRelatedVideos();
-    }, [id]);
+    }, [id, setLoading]);
+
+    // useEffect(() => {
+    //     document.getElementById("root").classList.add("custom-h");
+    //     fetchVideoDetails();
+    //     fetchRelatedVideos();
+    // }, [fetchRelatedVideos, fetchVideoDetails, id]);
+
+    // const fetchVideoDetails = () => {
+    //     setLoading(true);
+    //     fetchDataFromApi(`video/details/?id=${id}`).then((res) => {
+    //         setVideo(res);
+    //         setLoading(false);
+    //     });
+    // };
+
+    // const fetchRelatedVideos = () => {
+    //     setLoading(true);
+    //     fetchDataFromApi(`video/related-contents/?id=${id}`).then((res) => {
+    //         setRelatedVideos(res);
+    //         setLoading(false);
+    //     });
+    // };
 
     return(
         <div className="flex justify-center flex-row h-[calc(100%-56px)] bg-[#0f0f0f]">
             <div className="w-full max-w-[1280px] flex flex-col lg:flex-row">
-                <div className="flex flex-col lg:w-[calc(100%-350px)] xl:w-[calc(100%-400px)] px-4 py-3 lg:py-6 overflow-y-auto">
+                <div className="flex flex-col lg:w-[calc(100%-300px)] xl:w-[calc(100%-350px)] px-4 py-3 lg:py-6 overflow-y-auto">
                     <div className="h-[200px] md:h-[400px] lg:h-[400px] xl:h-[550px] ml-[-16px] lg:ml-0 mr-[-16px] lg:mr-0">
                         <ReactPlayer
                             url={`https://www.youtube.com/watch?v=${id}`}

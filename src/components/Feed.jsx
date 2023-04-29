@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import LeftNav from "./LeftNav";
 import { Context } from "../context/contextApi";
+import { v4 as uuidv4 } from "uuid";
 
 import VideoCard from "./VideoCard";
 
@@ -22,7 +23,7 @@ const Feed = () => {
                             if (item.type !== "video") return false;
                             return (
                                 <VideoCard
-                                    key={item?.video?.movingThumbnails?.[0]?.url}
+                                    key={uuidv4()}
                                     video={item?.video}
                                 />
                             )
