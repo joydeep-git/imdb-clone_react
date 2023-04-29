@@ -8,8 +8,6 @@ import { Context } from '../context/contextApi';
 function LeftNav() {
   const { selectedCatagories, setSelectedCatagories, mobileMenu } = useContext(Context);
 
-  console.log(mobileMenu);
-
   const redirect = useNavigate("/");
 
   const clickHandler = (name, type) => {

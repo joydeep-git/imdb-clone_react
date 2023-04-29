@@ -13,19 +13,17 @@ function SearchResult() {
   const { setLoading } = useContext(Context);
 
   useEffect(() => {
+    const fetchSearchResults = () => {
+      setLoading(true);
+  
+      fetchDataFromApi(`search/?q=${searchQuery}`).then((res) => {
+        setLoading(false);
+        setResult(res?.contents);
+      })
+    }
     fetchSearchResults();
     document.getElementById("root").classList.remove("custom-h");
-  }, [ searchQuery ])
-
-  const fetchSearchResults = () => {
-    setLoading(true);
-
-    fetchDataFromApi(`search/?q=${searchQuery}`).then((res) => {
-      setLoading(false);
-      console.log(res);
-      setResult(res?.contents);
-    })
-  }
+  }, [searchQuery, setLoading])
 
   return (
     <div className="flex flex-row h-[calc(100%-56px)]">

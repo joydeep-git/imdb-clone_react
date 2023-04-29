@@ -37,29 +37,7 @@ function VideoDetails() {
         fetchVideoDetails();
         fetchRelatedVideos();
     }, [id, setLoading]);
-
-    // useEffect(() => {
-    //     document.getElementById("root").classList.add("custom-h");
-    //     fetchVideoDetails();
-    //     fetchRelatedVideos();
-    // }, [fetchRelatedVideos, fetchVideoDetails, id]);
-
-    // const fetchVideoDetails = () => {
-    //     setLoading(true);
-    //     fetchDataFromApi(`video/details/?id=${id}`).then((res) => {
-    //         setVideo(res);
-    //         setLoading(false);
-    //     });
-    // };
-
-    // const fetchRelatedVideos = () => {
-    //     setLoading(true);
-    //     fetchDataFromApi(`video/related-contents/?id=${id}`).then((res) => {
-    //         setRelatedVideos(res);
-    //         setLoading(false);
-    //     });
-    // };
-
+    
     return(
         <div className="flex justify-center flex-row h-[calc(100%-56px)] bg-[#0f0f0f]">
             <div className="w-full max-w-[1280px] flex flex-col lg:flex-row">
