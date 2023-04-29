@@ -82,3 +82,7 @@ code {
         height: 100vh !important;
     }
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
