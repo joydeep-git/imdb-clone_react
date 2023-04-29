@@ -40,7 +40,7 @@ function Header() {
 
       <div className="flex justify-center items-center flex-row gap-2 md:gap-6">
         {pageName !== "video" && (
-          <div className="" onClick={mobileMenuToggle}>
+          <div className="cursor-pointer" onClick={mobileMenuToggle}>
             {mobileMenu ? (<CgClose className="text-white text-xs md:text-xl" />) : (<SlMenu className="text-white text-xs md:text-xl" />)}
           </div>
         )}
