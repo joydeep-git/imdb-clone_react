@@ -26,7 +26,7 @@ function LeftNav() {
   };
 
   return (
-    <div className={` ${ mobileMenu ? "visible" : "hidden" } w-[240px] overflow-y-auto h-full py-4 bg-[#0e0d0d] z-10 transition-all`}>
+    <div className={` ${ mobileMenu ? "visible" : "hidden" } w-[240px] overflow-y-auto h-full py-4 bg-[#0e0d0d] z-10 transition-all absolute`}>
       <div className='flex flex-col px-5 text-white'>
         {
           categories.map((item) => {
