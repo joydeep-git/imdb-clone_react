@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { abbreviateNumber } from 'js-abbreviation-number';
 import { Link } from 'react-router-dom';
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import VideoLength from '../shared/VideoLength';
+import { Context } from '../context/contextApi';
 
 function VideoCard({ video }) {
   const [imageSrc, setImageSrc] = useState(video?.thumbnails?.[0].url);
+  const { setMobileMenu } = useContext(Context);
 
   const handleMouseOver = () => {
     if (video?.movingThumbnails?.length > 0) {
@@ -17,8 +19,12 @@ function VideoCard({ video }) {
     setImageSrc(video?.thumbnails[0]?.url);
   };
 
+  const handleCloseMenu = () => {
+    setMobileMenu(false);
+  }
+
   return (
-    <Link to={`/video/${video?.videoId}`}>
+    <Link to={`/video/${video?.videoId}`} onClick={handleCloseMenu}>
       <div className='relative flex flex-col mb-8 gap-5'>
 
         <div className='relative h-48 md:h-40 rounded-tl-xl rounded-tr-xl overflow-hidden'>
