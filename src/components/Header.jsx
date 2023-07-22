@@ -38,19 +38,6 @@ function Header() {
     setDropdownOpen(false);
   };
 
-  const handleOutsideClick = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      closeDropdown();
-    }
-  };
-
-  // useEffect(() => {
-  //   document.addEventListener("click", handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener("click", handleOutsideClick);
-  //   };
-  // }, [handleOutsideClick]);
-
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -62,8 +49,7 @@ function Header() {
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, []); // Empty dependency array indicates the effect runs only once on mount
-
+  }, []);
 
   return (
     <div className={`sticky top-0 z-10 flex flex-row items-center justify-between h-14 px-4 md:px-5 bg-[#171817]`}>
