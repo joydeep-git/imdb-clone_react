@@ -8,13 +8,15 @@ import { abbreviateNumber } from "js-abbreviation-number";
 import { fetchDataFromApi } from "../utils/api";
 import { Context } from "../context/contextApi";
 import SuggestionVideoCard from "./SuggestionVideoCard";
+import { useFirebaseContext } from "../context/FirebaseContext";
 
 function VideoDetails() {
 
-    const [ video, setVideo ] = useState();
+    const [video, setVideo] = useState();
     const { id } = useParams();
-    const [ relatedVideos, setRelatedVideos ] = useState();
+    const [relatedVideos, setRelatedVideos] = useState();
     const { setLoading } = useContext(Context);
+    const { setVideoIds, authenticated } = useFirebaseContext();
 
     useEffect(() => {
         const fetchVideoDetails = () => {
@@ -37,9 +39,15 @@ function VideoDetails() {
         fetchVideoDetails();
         fetchRelatedVideos();
     }, [id, setLoading]);
-    
-    return(
-        <div className="flex justify-center flex-row h-[calc(100%-56px)] bg-[#0f0f0f]">
+
+    useEffect(() => {
+        if (authenticated) {
+            setVideoIds((prevIds) => [id, ...prevIds]);
+        }
+    }, [id]);
+
+    return (
+        <div className="flex justify-center flex-row h-[calc(100%-56px)] bg-[#0f0f0f] flex-grow">
             <div className="w-full max-w-[1280px] flex flex-col lg:flex-row">
                 <div className="flex flex-col lg:w-[calc(100%-300px)] xl:w-[calc(100%-350px)] px-4 py-3 lg:py-6 overflow-y-auto">
                     <div className="h-[200px] md:h-[400px] lg:h-[400px] xl:h-[550px] ml-[-16px] lg:ml-0 mr-[-16px] lg:mr-0">
@@ -70,8 +78,8 @@ function VideoDetails() {
                                     {video?.author?.title}
                                     {video?.author?.badges[0]?.type ===
                                         "VERIFIED_CHANNEL" && (
-                                        <BsFillCheckCircleFill className="text-white/[0.5] text-[12px] ml-1" />
-                                    )}
+                                            <BsFillCheckCircleFill className="text-white/[0.5] text-[12px] ml-1" />
+                                        )}
                                 </div>
                                 <div className="text-white/[0.7] text-sm">
                                     {video?.author?.stats?.subscribersText}

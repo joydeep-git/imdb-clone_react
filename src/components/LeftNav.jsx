@@ -6,11 +6,14 @@ import { categories } from '../utils/constants';
 import { Context } from '../context/contextApi';
 
 function LeftNav() {
-  const { selectedCatagories, setSelectedCatagories, mobileMenu } = useContext(Context);
+  const { selectedCatagories, setSelectedCatagories, mobileMenu, setMobileMenu } = useContext(Context);
 
-  const redirect = useNavigate("/");
+  const navigate = useNavigate();
 
   const clickHandler = (name, type) => {
+
+    setMobileMenu(!mobileMenu);
+
     switch (type) {
       case "category":
         return setSelectedCatagories(name);
@@ -18,13 +21,17 @@ function LeftNav() {
         return setSelectedCatagories(name);
       case "menu":
         return false;
+      case "history":
+        setSelectedCatagories(null);
+        navigate("/history");
+        return;
       default:
         break;
     }
   };
 
   return (
-    <div className={` ${ mobileMenu ? "visible" : "hidden" } w-[240px] overflow-y-auto h-full py-4 bg-[#0e0d0d] z-10 transition-all absolute`}>
+    <div className={` ${mobileMenu ? "visible" : "hidden"} w-[240px] overflow-y-auto h-full py-4 bg-[#0e0d0d] z-10 transition-all absolute`}>
       <div className='flex flex-col px-5 text-white'>
         {
           categories.map((item) => {
@@ -35,7 +42,7 @@ function LeftNav() {
                   icon={item.icon}
                   type={item.type}
                   action={() => {
-                    redirect("/")
+                    navigate("/")
                     clickHandler(item.name, item.type);
                   }}
                   className={`${selectedCatagories === item.name ? "bg-white/[0.5]" : " "}`}

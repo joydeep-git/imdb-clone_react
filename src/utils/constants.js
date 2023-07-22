@@ -1,7 +1,7 @@
 import React from "react";
 
 import { AiFillHome, AiOutlineFlag } from "react-icons/ai";
-import { MdLocalFireDepartment, MdLiveTv } from "react-icons/md";
+import { MdLocalFireDepartment, MdLiveTv, MdHistory } from "react-icons/md";
 import { CgMusicNote } from "react-icons/cg";
 import { FiFilm } from "react-icons/fi";
 import { IoGameControllerSharp } from "react-icons/io5";
@@ -21,11 +21,9 @@ export const categories = [
     { name: "Sports", icon: <GiDiamondTrophy />, type: "category" },
     { name: "Learning", icon: <RiLightbulbLine />, type: "category" },
     {
-        name: "Fashion & beauty",
-        icon: <GiEclipse />,
-        type: "category",
-        divider: true,
+        name: "Fashion & beauty", icon: <GiEclipse />, type: "category", divider: true,
     },
+    { name: "History", icon: <MdHistory className="text-white text-xl" />, type: "history", divider: true },
     { name: "Settings", icon: <FiSettings />, type: "menu" },
     { name: "Report History", icon: <AiOutlineFlag />, type: "menu" },
     { name: "Help", icon: <FiHelpCircle />, type: "menu" },
