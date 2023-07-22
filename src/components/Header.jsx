@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import ytLogo from "../Assets/yt-logo.png";
 import ytLogoMobile from "../Assets/yt-logo-mobile.png";
@@ -9,16 +9,13 @@ import { FiBell } from "react-icons/fi";
 import { CgClose } from "react-icons/cg";
 import { Context } from "../context/contextApi";
 import Loader from "../shared/Loader";
-import Dropdown from 'react-bootstrap/Dropdown';
 import { useFirebaseContext } from "../context/FirebaseContext";
 
 function Header() {
-  const { googleSignIn, authenticated, userData, signOutUser } = useFirebaseContext();
+  const { googleSignIn, authenticated, signOutUser } = useFirebaseContext();
   const [searchQuery, setSearchQuery] = useState("");
   const redirect = useNavigate();
   const { mobileMenu, setMobileMenu, loading } = useContext(Context);
-  const dropdownRef = useRef(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const searchQueryHandler = (e) => {
     if ((e?.key === "Enter" || e === "searchButton") && searchQuery?.length > 0) {
@@ -29,27 +26,6 @@ function Header() {
   const mobileMenuToggle = () => {
     setMobileMenu(!mobileMenu);
   };
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const closeDropdown = () => {
-    setDropdownOpen(false);
-  };
-
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        closeDropdown();
-      }
-    };
-
-    document.addEventListener("click", handleOutsideClick);
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
 
   return (
     <div className={`sticky top-0 z-10 flex flex-row items-center justify-between h-14 px-4 md:px-5 bg-[#171817]`}>
@@ -92,17 +68,9 @@ function Header() {
             </div>
           </div>
 
-          <div ref={dropdownRef} className="relative">
-            <div className="bg-gray-800 p-0 rounded-full overflow-hidden h-8 w-8 cursor-pointer" onClick={toggleDropdown}>
-              {userData && <img src={userData.photoURL} alt="p" />}
-            </div>
-
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 py-2 w-20 text-center bg-white rounded-md shadow-lg z-10 text-red-600">
-                <Dropdown.Item onClick={signOutUser}>SIGN OUT</Dropdown.Item>
-              </div>
-            )}
-          </div>
+          <button onClick={signOutUser} className="text-white border px-2 rounded-2xl hover:bg-white hover:text-black">
+            SIGN OUT
+          </button>
         </div>
       )}
 

@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFirebaseContext } from '../context/FirebaseContext';
 import fetchVideoDetails from '../utils/VideoAPI';
 
+import { Context } from '../context/contextApi';
+
 import { FaTrash } from "react-icons/fa";
 
 const History = () => {
+
+    const { setMobileMenu } = useContext(Context);
 
     const [videoDetails, setVideoDetails] = useState([]);
     const { authenticated, googleSignIn, videoIds, deleteHistory } = useFirebaseContext();
@@ -19,6 +23,10 @@ const History = () => {
         };
         fetchDetailsForVideoIds();
     }, [videoIds]);
+
+    const handleCloseMenu = () => {
+        setMobileMenu(false);
+    }
 
     return (
         <div className="flex-grow flex w-full m-auto text-white bg-[#0f0f0f]">
@@ -48,7 +56,7 @@ const History = () => {
                                         key={video?.id}
                                         className='max-w-[17rem] border broder-white p-1 m-4 rounded-xl flex flex-col items-center justify-between'>
 
-                                        <Link to={`/video/${video?.id}`}>
+                                        <Link to={`/video/${video?.id}`} onClick={handleCloseMenu}>
                                             <div className='w-[16.5rem] rounded-xl h-auto object-cover top-0'>
                                                 <img src={video?.snippet?.thumbnails?.maxres?.url}
                                                     alt={video?.snippet?.title}
