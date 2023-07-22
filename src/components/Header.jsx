@@ -6,6 +6,7 @@ import { FaBars } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { RiVideoAddLine } from "react-icons/ri";
 import { FiBell } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 import { CgClose } from "react-icons/cg";
 import { Context } from "../context/contextApi";
 import Loader from "../shared/Loader";
@@ -56,8 +57,8 @@ function Header() {
       </div>
 
       {!authenticated ? (
-        <button onClick={googleSignIn} className="text-white border px-2 rounded-2xl  hover:bg-white hover:text-black">
-          SIGN IN
+        <button onClick={googleSignIn} className="text-white flex flex-row gap-2 justify-center border px-2 rounded-2xl  hover:bg-white hover:text-black items-center">
+          <FcGoogle /> SIGN IN
         </button>
       ) : (
         <div className="gap-6 flex flex-row items-center justify-center">
