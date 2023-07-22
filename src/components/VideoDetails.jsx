@@ -44,7 +44,7 @@ function VideoDetails() {
         if (authenticated) {
             setVideoIds((prevIds) => [id, ...prevIds]);
         }
-    }, [id]);
+    }, [id, authenticated]);
 
     return (
         <div className="flex justify-center flex-row h-[calc(100%-56px)] bg-[#0f0f0f] flex-grow">
