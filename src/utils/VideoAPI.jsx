@@ -15,7 +15,7 @@ const fetchVideoDetails = async (videoId) => {
 
     try {
         const response = await axios.request(options);
-        return response.data.items[0]; // Return the first video item in the response (details for the video ID)
+        return response.data.items[0];
     } catch (error) {
         console.error('API request failed:', error);
         throw error;
