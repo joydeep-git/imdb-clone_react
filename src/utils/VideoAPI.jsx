@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const API_KEY = 'AIzaSyD8XlfFajLePNEximqjG5TYa7T_7UCera8';
+const API_KEY = 'AIzaSyDpIaPi59bjMYuXCYCpeFWcGQzuNnb2UCQ';
 
 const fetchVideoDetails = async (videoId) => {
     const options = {
