@@ -6,17 +6,16 @@ import { FaBars } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { RiVideoAddLine } from "react-icons/ri";
 import { FiBell } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
 import { CgClose } from "react-icons/cg";
 import { Context } from "../context/contextApi";
 import Loader from "../shared/Loader";
 import { useFirebaseContext } from "../context/FirebaseContext";
 
 function Header() {
-  const { googleSignIn, authenticated, signOutUser } = useFirebaseContext();
+  const { signInPage, setSignInPage, authenticated, signOutUser } = useFirebaseContext();
   const [searchQuery, setSearchQuery] = useState("");
   const redirect = useNavigate();
-  const { mobileMenu, setMobileMenu, loading } = useContext(Context);
+  const { mobileMenu, setMobileMenu, loading, } = useContext(Context);
 
   const searchQueryHandler = (e) => {
     if ((e?.key === "Enter" || e === "searchButton") && searchQuery?.length > 0) {
@@ -57,15 +56,17 @@ function Header() {
       </div>
 
       {!authenticated ? (
-        <button onClick={googleSignIn} className="text-white flex flex-row gap-2 justify-center border px-2 rounded-2xl  hover:bg-white hover:text-black items-center">
-          <FcGoogle /> SIGN IN
-        </button>
+        <Link to="signUp" className="text-white flex flex-row gap-2 justify-center border px-2 rounded-2xl  hover:bg-white hover:text-black items-center">
+          SIGN IN
+        </Link>
       ) : (
         <div className="gap-6 flex flex-row items-center justify-center">
           <div className="text-white p-0 m-0 hidden md:flex flex-row gap-6 text-xl items-center justify-center h-full">
             <div className="hidden md:flex flex-row gap-6 items-center justify-center">
               <RiVideoAddLine className="hover:cursor-pointer hover:text-gray-300 h-6" />
               <FiBell className="hover:cursor-pointer hover:text-gray-300 h-6" />
+              <Link to="/profile"
+                className="text-white border px-2 rounded-2xl hover:bg-white hover:text-black text-[1rem]">PROFILE</Link>
             </div>
           </div>
 

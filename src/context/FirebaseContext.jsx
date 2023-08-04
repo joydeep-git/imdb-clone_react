@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 
 const firebaseConfig = {
@@ -32,17 +32,14 @@ export const FirebaseProvider = ({ children }) => {
     const [userData, setUserData] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [videoIds, setVideoIds] = useState([]);
+    const [signInPage, setSignInPage] = useState(false);
 
     // Extracting user's ID
     const userId = userData ? userData.uid : null;
 
-    // Google auth provider
-    const googleAuth = new GoogleAuthProvider();
-
     // Google sign-in function
-    const googleSignIn = () => {
-        signInWithPopup(firebaseAuth, googleAuth);
-        setVideoIds([]);
+    const userSignUp = () => {
+
     };
 
     // checking authentication status
@@ -93,7 +90,7 @@ export const FirebaseProvider = ({ children }) => {
     };
 
     return (
-        <FirebaseContext.Provider value={{ googleSignIn, authenticated, setAuthenticated, userData, signOutUser, videoIds, setVideoIds, deleteHistory }}>
+        <FirebaseContext.Provider value={{ userSignUp, authenticated, setAuthenticated, userData, signOutUser, videoIds, setVideoIds, deleteHistory, signInPage, setSignInPage }}>
             {children}
         </FirebaseContext.Provider>
     );
