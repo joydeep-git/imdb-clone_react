@@ -169,43 +169,13 @@ export const FirebaseProvider = ({ children }) => {
         setVideoIds(filteredData);
     };
 
-    const handleDeleteAccount = (email, password) => {
-        if (authenticated && userFirebaseData !== null) {
-            signInWithEmailAndPassword(firebaseAuth, email, password)
-                .then(() => {
-                    if (userFirebaseId) {
-                        set(ref(firebaseDatabase, `users/${userFirebaseId}`), null)
-                            .then(() => {
-                                userFirebaseData.delete()
-                                    .then(() => {
-                                        setAuthenticated(false);
-                                        setUserFirebaseData(null);
-                                        setUserData(null);
-                                        setError("account deleted");
-                                        setError(null);
-                                    })
-                                    .catch((error) => {
-                                        setError("Error deleting account: " + error.message);
-                                    });
-                            })
-                            .catch((error) => {
-                                setError("Error deleting account: " + error.message);
-                            });
-                    }
-                })
-                .catch((error) => {
-                    setError("Error signing in: " + error.message);
-                });
-        }
-    };
-
     return (
         <FirebaseContext.Provider value={{
             signUpUser, signInUser, signOutUser,
             authenticated, setAuthenticated,
             userData, setUserData,
             videoIds, setVideoIds,
-            deleteHistory, handleDeleteAccount,
+            deleteHistory, 
             newUserData, setNewUserData,
             userSignUpData, setUserSignUpData,
             userLoginData, setUserLoginData,
