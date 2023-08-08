@@ -9,10 +9,8 @@ const Profile = () => {
 
     const navigate = useNavigate();
 
-    const { authenticated, userData,
-        handleDeleteAccount, signOutUser } = useFirebaseContext();
+    const { authenticated, userData, signOutUser } = useFirebaseContext();
 
-    const [del, setDel] = useState(false);
     const [edit, setEdit] = useState(false);
 
     useEffect(() => {
@@ -80,27 +78,6 @@ const Profile = () => {
                                     CANCEL
                                 </button>
 
-                            </div>
-                    }
-
-                    {
-                        !del
-                            ? <button
-                                onClick={() => setDel(true)}
-                                className='button red-btn' >
-                                DELETE ACCOUNT
-                            </button>
-                            : <div
-                                className='deleteBtn'>
-                                <button
-                                    className='button red-btn'
-                                    onClick={() => handleDeleteAccount(userData.email, userData.password)} >
-                                    CONFIRM
-                                </button>
-                                <button
-                                    className='button green-btn' onClick={() => setDel(false)}>
-                                    CANCEL
-                                </button>
                             </div>
                     }
                 </div>
