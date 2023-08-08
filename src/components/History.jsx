@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
 import { useFirebaseContext } from '../context/FirebaseContext';
 import fetchVideoDetails from '../utils/VideoAPI';
 
-import { Context } from '../context/contextApi';
+import { Context } from '../context/ContextApi';
 
 import { FaTrash } from "react-icons/fa";
 
 const History = () => {
 
+    const redirect = useNavigate();
+
     const { setMobileMenu } = useContext(Context);
 
     const [videoDetails, setVideoDetails] = useState([]);
-    const { authenticated, googleSignIn, videoIds, deleteHistory } = useFirebaseContext();
+    const { authenticated, videoIds, deleteHistory } = useFirebaseContext();
 
     useEffect(() => {
         const fetchDetailsForVideoIds = async () => {
@@ -34,7 +36,7 @@ const History = () => {
                 <div className="flex flex-col w-full items-center p-4 gap-3">
                     <h1 className="text-2xl">You need to sign in first to see history</h1>
                     <button
-                        onClick={googleSignIn}
+                        onClick={() => redirect('/login')}
                         className="border text-xl px-2 rounded-xl hover:bg-white hover:text-black"
                     >
                         SIGN IN

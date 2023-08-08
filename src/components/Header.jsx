@@ -7,15 +7,15 @@ import { IoIosSearch } from "react-icons/io";
 import { RiVideoAddLine } from "react-icons/ri";
 import { FiBell } from "react-icons/fi";
 import { CgClose } from "react-icons/cg";
-import { Context } from "../context/contextApi";
+import { Context } from "../context/ContextApi";
 import Loader from "../shared/Loader";
 import { useFirebaseContext } from "../context/FirebaseContext";
 
 function Header() {
-  const { signInPage, setSignInPage, authenticated, signOutUser } = useFirebaseContext();
+  const { authenticated, signOutUser } = useFirebaseContext();
   const [searchQuery, setSearchQuery] = useState("");
   const redirect = useNavigate();
-  const { mobileMenu, setMobileMenu, loading, } = useContext(Context);
+  const { mobileMenu, setMobileMenu, loading } = useContext(Context);
 
   const searchQueryHandler = (e) => {
     if ((e?.key === "Enter" || e === "searchButton") && searchQuery?.length > 0) {
@@ -56,7 +56,7 @@ function Header() {
       </div>
 
       {!authenticated ? (
-        <Link to="signUp" className="text-white flex flex-row gap-2 justify-center border px-2 rounded-2xl  hover:bg-white hover:text-black items-center">
+        <Link to="/login" className="text-white flex flex-row gap-2 justify-center border px-2 rounded-2xl  hover:bg-white hover:text-black items-center">
           SIGN IN
         </Link>
       ) : (
@@ -65,14 +65,12 @@ function Header() {
             <div className="hidden md:flex flex-row gap-6 items-center justify-center">
               <RiVideoAddLine className="hover:cursor-pointer hover:text-gray-300 h-6" />
               <FiBell className="hover:cursor-pointer hover:text-gray-300 h-6" />
-              <Link to="/profile"
-                className="text-white border px-2 rounded-2xl hover:bg-white hover:text-black text-[1rem]">PROFILE</Link>
             </div>
           </div>
 
-          <button onClick={signOutUser} className="text-white border px-2 rounded-2xl hover:bg-white hover:text-black">
-            SIGN OUT
-          </button>
+          <Link to='/profile' className="text-white border px-2 rounded-2xl hover:bg-white hover:text-black">
+            ACCOUNT
+          </Link>
         </div>
       )}
 

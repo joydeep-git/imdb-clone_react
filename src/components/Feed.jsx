@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import LeftNav from "./LeftNav";
-import { Context } from "../context/contextApi";
 import { v4 as uuidv4 } from "uuid";
+
+import { Context } from "../context/ContextApi";
 
 import VideoCard from "./VideoCard";
 
@@ -11,7 +12,7 @@ const Feed = () => {
 
     useEffect(() => {
         document.getElementById("root").classList.remove("custom-h")
-    },[])
+    }, [])
 
     return (
         <div className="h-[calc(100%-56px)] flex flex-row">

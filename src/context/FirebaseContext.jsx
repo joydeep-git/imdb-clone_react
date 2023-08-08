@@ -1,17 +1,17 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAitVENc5zs7csWhAaH-OyK_rQZkySgYkM",
-    authDomain: "clone-25bbd.firebaseapp.com",
-    databaseURL: "https://clone-25bbd-default-rtdb.firebaseio.com",
-    projectId: "clone-25bbd",
-    storageBucket: "clone-25bbd.appspot.com",
-    messagingSenderId: "328160633124",
-    appId: "1:328160633124:web:81e968be73a620c73093b1",
-    measurementId: "G-D13B8V03Q3"
+    apiKey: "AIzaSyD32JQGqZoSWgzuETFxCMpKdA0t8c6ahe8",
+    authDomain: "clone-fdb69.firebaseapp.com",
+    databaseURL: "https://clone-fdb69-default-rtdb.firebaseio.com",
+    projectId: "clone-fdb69",
+    storageBucket: "clone-fdb69.appspot.com",
+    messagingSenderId: "712689308759",
+    appId: "1:712689308759:web:dbf2b7f20cfb6d3def7f12",
+    measurementId: "G-1EKJFD030Z"
 };
 
 // Initializing firebase app
@@ -28,48 +28,118 @@ const firebaseAuth = getAuth(firebase);
 const firebaseDatabase = getDatabase(firebase);
 
 export const FirebaseProvider = ({ children }) => {
+
     // Creating states to store data and know authentication status
     const [userData, setUserData] = useState(null);
+    const [userFirebaseData, setUserFirebaseData] = useState(null);
     const [authenticated, setAuthenticated] = useState(false);
     const [videoIds, setVideoIds] = useState([]);
-    const [signInPage, setSignInPage] = useState(false);
+    const [error, setError] = useState(null);
+    const [userFirebaseId, setUserFirebaseId] = useState(null);
+    const [newUserData, setNewUserData] = useState(null);
+    const [userLoginData, setUserLoginData] = useState(null);
+    const [userSignUpData, setUserSignUpData] = useState({
+        name: "",
+        email: "",
+        number: "",
+        password: "",
+    });
+
+    // SHOWING ERRORS
+    useEffect(() => {
+        if (error !== null) {
+            alert(error);
+            setError(null);
+        }
+    }, [error]);
 
     // Extracting user's ID
-    const userId = userData ? userData.uid : null;
+    useEffect(() => {
+        if (userFirebaseData !== null) {
+            setUserFirebaseId(userFirebaseData.uid);
+        } else {
+            setUserFirebaseId(null);
+        }
+    }, [userFirebaseData]);
 
-    // Google sign-in function
-    const userSignUp = () => {
+    // USER SIGNUP
+    const signUpUser = (em, pass) => {
+        createUserWithEmailAndPassword(firebaseAuth, em, pass)
+            .catch((err) => {
+                setError(err);
+            })
+    };
 
+    // USER SIGNIN
+    const signInUser = (em, pass) => {
+        signInWithEmailAndPassword(firebaseAuth, em, pass)
+            .catch((err) => {
+                setError(err);
+            })
     };
 
     // checking authentication status
     useEffect(() => {
-        onAuthStateChanged(firebaseAuth, (user) => {
+        const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
             if (user) {
                 setAuthenticated(true);
-                setUserData(user);
+                setUserFirebaseData(user);
             } else {
                 setAuthenticated(false);
-                setUserData(user);
+                setUserFirebaseData(null);
+                setUserData(null);
             }
         });
+        return () => unsubscribe();
     }, []);
 
+    // FETCHING PROFILE DATA FROM FIREBASE
     useEffect(() => {
-        if (authenticated && userId && videoIds.length > 0) {
+        if (userFirebaseData && userFirebaseId) {
+            onValue(ref(firebaseDatabase, `users/${userFirebaseId}/profile`), (snapshot) => {
+                if (snapshot.exists()) {
+                    const fetchedData = snapshot.val();
+                    setUserData(fetchedData);
+                } else {
+                    setUserData(null);
+                }
+            });
+        }
+    }, [userFirebaseData, userFirebaseId]);
+
+    const updateUserData = () => {
+        setUserData(newUserData);
+    }
+
+    // SAVING USER DATA IN FIREBASE
+    useEffect(() => {
+        if (authenticated && userFirebaseData !== null && userData !== null) {
+            if (userFirebaseId) {
+                if (userData.name !== userFirebaseData.displayName) {
+                    set(ref(firebaseDatabase, `users/${userFirebaseId}/profile`), {
+                        ...userData,
+                    });
+                }
+            }
+        }
+    }, [authenticated, userFirebaseData, userData, userFirebaseId]);
+
+    // SAVING VIDEO IDs DATA IN FIREBASE
+    useEffect(() => {
+        if (authenticated && userFirebaseId && videoIds.length > 0) {
             try {
                 const uniqueVideoIds = [...new Set(videoIds)];
-                set(ref(firebaseDatabase, `users/${userId}`), uniqueVideoIds);
+                set(ref(firebaseDatabase, `users/${userFirebaseId}/videoids`), uniqueVideoIds);
             } catch (error) {
                 console.log("Error sending data to the Realtime Database:", error);
             }
         }
-    }, [userId, videoIds, authenticated]);
+    }, [userFirebaseId, videoIds, authenticated]);
 
+    // FETCHING VIDEO IDs FROM FIREBASE
     useEffect(() => {
-        if (authenticated && userId) {
-            // Import existing values from the database
-            const videoIdsRef = ref(firebaseDatabase, `users/${userId}`);
+        if (authenticated && userFirebaseId) {
+            const videoIdsRef = ref(firebaseDatabase, `users/${userFirebaseId}/videoids`);
             onValue(videoIdsRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
@@ -77,11 +147,21 @@ export const FirebaseProvider = ({ children }) => {
                 }
             });
         }
-    }, [authenticated, userId]);
+    }, [authenticated, userFirebaseId]);
 
     const signOutUser = () => {
-        signOut(firebaseAuth);
-        setAuthenticated(false);
+        if (authenticated) {
+            signOut(firebaseAuth)
+                .then(() => {
+                    setAuthenticated(false);
+                    setUserFirebaseData(null);
+                    setUserData(null);
+                    setError(null);
+                })
+                .catch((error) => {
+                    setError("Error signing out: " + error.message);
+                });
+        }
     };
 
     const deleteHistory = (id) => {
@@ -89,8 +169,48 @@ export const FirebaseProvider = ({ children }) => {
         setVideoIds(filteredData);
     };
 
+    const handleDeleteAccount = (email, password) => {
+        if (authenticated && userFirebaseData !== null) {
+            signInWithEmailAndPassword(firebaseAuth, email, password)
+                .then(() => {
+                    if (userFirebaseId) {
+                        set(ref(firebaseDatabase, `users/${userFirebaseId}`), null)
+                            .then(() => {
+                                userFirebaseData.delete()
+                                    .then(() => {
+                                        setAuthenticated(false);
+                                        setUserFirebaseData(null);
+                                        setUserData(null);
+                                        setError("account deleted");
+                                        setError(null);
+                                    })
+                                    .catch((error) => {
+                                        setError("Error deleting account: " + error.message);
+                                    });
+                            })
+                            .catch((error) => {
+                                setError("Error deleting account: " + error.message);
+                            });
+                    }
+                })
+                .catch((error) => {
+                    setError("Error signing in: " + error.message);
+                });
+        }
+    };
+
     return (
-        <FirebaseContext.Provider value={{ userSignUp, authenticated, setAuthenticated, userData, signOutUser, videoIds, setVideoIds, deleteHistory, signInPage, setSignInPage }}>
+        <FirebaseContext.Provider value={{
+            signUpUser, signInUser, signOutUser,
+            authenticated, setAuthenticated,
+            userData, setUserData,
+            videoIds, setVideoIds,
+            deleteHistory, handleDeleteAccount,
+            newUserData, setNewUserData,
+            userSignUpData, setUserSignUpData,
+            userLoginData, setUserLoginData,
+            updateUserData
+        }}>
             {children}
         </FirebaseContext.Provider>
     );

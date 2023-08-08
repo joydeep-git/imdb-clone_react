@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import LeftNavMenuItem from './LeftNavMenuItem';
 import { categories } from '../utils/constants';
-import { Context } from '../context/contextApi';
+import { Context } from '../context/ContextApi';
 
 function LeftNav() {
   const { selectedCatagories, setSelectedCatagories, mobileMenu, setMobileMenu } = useContext(Context);
