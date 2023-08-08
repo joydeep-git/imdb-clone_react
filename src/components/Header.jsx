@@ -12,7 +12,7 @@ import Loader from "../shared/Loader";
 import { useFirebaseContext } from "../context/FirebaseContext";
 
 function Header() {
-  const { authenticated, signOutUser } = useFirebaseContext();
+  const { authenticated } = useFirebaseContext();
   const [searchQuery, setSearchQuery] = useState("");
   const redirect = useNavigate();
   const { mobileMenu, setMobileMenu, loading } = useContext(Context);
