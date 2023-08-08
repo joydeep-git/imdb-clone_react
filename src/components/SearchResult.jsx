@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchDataFromApi } from '../utils/api';
+
 import { Context } from '../context/ContextApi';
+
 import LeftNav from './LeftNav';
 import { v4 as uuidv4 } from 'uuid';
 import SearchResultVideoCard from './SearchResultVideoCard';

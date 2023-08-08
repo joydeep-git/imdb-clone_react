@@ -6,7 +6,9 @@ import { AiOutlineLike } from "react-icons/ai";
 import { abbreviateNumber } from "js-abbreviation-number";
 
 import { fetchDataFromApi } from "../utils/api";
+
 import { Context } from "../context/ContextApi";
+
 import SuggestionVideoCard from "./SuggestionVideoCard";
 import { useFirebaseContext } from "../context/FirebaseContext";
 
