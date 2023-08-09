@@ -169,6 +169,10 @@ export const FirebaseProvider = ({ children }) => {
         setVideoIds(filteredData);
     };
 
+    const dummyLogin = () => {
+        signInWithEmailAndPassword(firebaseAuth, "dummy@email.com", "123456");
+    }
+
     return (
         <FirebaseContext.Provider value={{
             signUpUser, signInUser, signOutUser,
@@ -179,7 +183,7 @@ export const FirebaseProvider = ({ children }) => {
             newUserData, setNewUserData,
             userSignUpData, setUserSignUpData,
             userLoginData, setUserLoginData,
-            updateUserData
+            updateUserData, dummyLogin
         }}>
             {children}
         </FirebaseContext.Provider>

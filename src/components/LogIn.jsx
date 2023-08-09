@@ -11,7 +11,7 @@ function Login() {
 
     const clearInput = document.querySelectorAll('input');
 
-    const { signInUser, authenticated, userLoginData, setUserLoginData } = useFirebaseContext();
+    const { signInUser, authenticated, userLoginData, setUserLoginData, dummyLogin } = useFirebaseContext();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,14 +81,27 @@ function Login() {
                         onChange={handleChange}
                     />
                 </div>
+
                 <button type="submit" id="register" className='button'>
                     Login
                 </button>
+
                 <h5>
                     Don't have an account?
                     <br />
                     <Link to="/signup">Sign Up</Link>
                 </h5>
+
+                <p className='dummy'>
+                    We also have a dummy account.
+                    <br />
+                    <button
+                        className='button'
+                        onClick={dummyLogin}>
+                        Dummy Login
+                    </button>
+                </p>
+
             </form>
         </div>
     );
