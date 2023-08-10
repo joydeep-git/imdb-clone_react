@@ -170,7 +170,7 @@ export const FirebaseProvider = ({ children }) => {
     };
 
     const dummyLogin = () => {
-        signInWithEmailAndPassword(firebaseAuth, "dummy@email.com", "123456");
+        signInWithEmailAndPassword(firebaseAuth, "demo@demo.demo", "123456");
     }
 
     return (
